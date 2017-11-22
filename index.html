@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>div拖拽</title>
+    <style>
+        #box{width:100px;height:100px;background:red;position: absolute;left:100px;top:100px;}
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+    window.onload = function() {
+        var oBox = document.getElementById("box");
+        var RL = 0;
+        var RT = 0;
+        oBox.onmousedown = function(ev) {
+            var ev = event || ev;
+            RL = ev.clientX - oBox.offsetLeft;
+            RT = ev.clientY - oBox.offsetTop;
+            document.onmousemove = function(ev) {
+                var ev = event || ev;
+                var L = ev.clientX - RL;
+                var T = ev.clientY - RT;
+                if (L < 0) {
+                    L = 0;
+                } else if (L > document.documentElement.clientWidth - oBox.offsetWidth) {
+                    L = document.documentElement.clientWidth - oBox.offsetWidth;
+                }
+                if (T < 0) {
+                    T = 0;
+                } else if (T > document.documentElement.clientHeight - oBox.offsetHeight) {
+                    T = document.documentElement.clientHeight - oBox.offsetHeight;
+                }
+                oBox.style.left = L + "px";
+                oBox.style.top = T + "px";
+            }
+        };
+        // 移出页面
+        // 	oBox.onmousedown=function(ev){
+        // 	      var ev=event||ev;
+        // 	      RL=ev.clientX-oBox.offsetLeft;
+        // 	      RT=ev.clientY-oBox.offsetTop;
+        // 	      document.onmousemove=function(ev){
+        // 	              var ev=event||ev;
+        // 	              oBox.style.left=ev.clientX-RL+"px";
+        // 	              oBox.style.top=ev.clientY-RT+"px";
+        // 	      }
+        // 	}
+        oBox.onmouseup = function() {
+            document.onmousemove = null;
+        }
+    }
+</script>
+</body>
+</html>
